@@ -16,8 +16,6 @@ html {
 }
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 80% 0, #20150a 0, transparent 30%), var(--bg);
   color: var(--text);
   font-family: Montserrat, Arial, sans-serif;
   line-height: 1.65;
