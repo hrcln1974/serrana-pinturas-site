@@ -22,7 +22,7 @@
       sizes="32x32"
       href="assets/favicon-32.png"
     />
-<link rel="stylesheet" href="style.css?v=1.3" />
+<link rel="stylesheet" href="style.css?v=1.4" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -80,11 +80,20 @@
     </header>
     <main id="conteudo">
       <section id="inicio" class="hero" aria-labelledby="hero-title">
-        <img
-          src="assets/hero-serrana.webp"
-          alt="Profissional da Serrana Pinturas e Reformas em ambiente reformado"
-          fetchpriority="high"
-        />
+        <picture class="hero-picture">
+          <!-- Banner vertical exclusivo para celulares -->
+          <source
+            media="(max-width: 850px)"
+            srcset="assets/hero-serrana-mobile.webp"
+          />
+
+          <!-- Banner horizontal para tablets e computadores -->
+          <img
+            src="assets/hero-serrana.webp"
+            alt="Luciano Pinto, da Serrana Pinturas e Reformas em Geral"
+            fetchpriority="high"
+          />
+        </picture>
         
       </section>
       <section class="trust" aria-label="Nossos diferenciais">
