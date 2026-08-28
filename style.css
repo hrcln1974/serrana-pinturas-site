@@ -16,6 +16,7 @@ html {
 }
 body {
   margin: 0;
+  background: var(--bg);
   color: var(--text);
   font-family: Montserrat, Arial, sans-serif;
   line-height: 1.65;
@@ -570,10 +571,9 @@ footer {
   .hero {
     min-height: 620px;
   }
-  .hero > img {
-    object-position: 70% center;
-  }
- 
+ .hero > img {
+  object-position: center center;
+}
   .hero-copy {
     padding: 100px 7vw;
   }
