@@ -117,7 +117,8 @@ nav a:hover,
   inset: 0;
   object-fit: cover;
   object-position: center;
- }
+}
+
 .hero:after {
   content: "";
   position: absolute;
@@ -571,8 +572,10 @@ footer {
   .hero {
     min-height: 620px;
   }
- .hero > img {
-  object-position: center center;
+  .hero > img {
+    object-position: 70% center;
+    filter: brightness(1.15);
+  }
 }
   .hero-copy {
     padding: 100px 7vw;
