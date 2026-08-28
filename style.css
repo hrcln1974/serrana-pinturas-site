@@ -575,11 +575,7 @@ footer {
   .hero > img {
     object-position: 70% center;
   }
-  .hero:after {
-          background: 
-          linear-gradient
-          (5deg, rgba(187, 185, 185, 0.65), rgba(135, 138, 143, 0.65));
-    }
+  .hero:after
   }
   .hero-copy {
     padding: 100px 7vw;
