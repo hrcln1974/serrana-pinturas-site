@@ -1,26 +1,36 @@
-# Serrana Pinturas & Reformas — V2.0
+# Serrana Pinturas & Reformas — V3
 
-Site institucional responsivo com painel administrativo para gerenciamento de fotos e vídeos.
+## Hospedagem
+Esta versão foi preparada para hospedagem estática na Hostinger: **HTML + CSS + JavaScript**, sem Node.js, Express, npm ou banco de dados.
 
-## Funcionalidades
-- Painel protegido em `/admin.html` ou `/admin`.
-- Upload de fotos e vídeos para armazenamento persistente em `storage/uploads/`.
-- Cadastro por URL para imagens e vídeos; YouTube e Vimeo recebem incorporação quando possível.
-- Edição de título, categoria, descrição e destaque.
-- Exclusão de mídias com remoção do arquivo local enviado ao servidor.
-- Galeria pública carregada pela API.
-- Seção pública de vídeos.
-- WhatsApp e conteúdo institucional mantidos.
-- Cookie de sessão HttpOnly + SameSite e limite básico de tentativas de login.
+## Painel
+Abra `admin.html`.
 
-## Rodar localmente
-1. `copy .env.example .env` (Windows) ou `cp .env.example .env`.
-2. Edite `ADMIN_USER` e `ADMIN_PASSWORD`.
-3. `npm install`
-4. `npm start`
-5. Abra `http://localhost:3000`.
+Acesso inicial:
+- Usuário: `admin`
+- Senha: `serrana123`
 
-## Hostinger
-Configure uma aplicação Node.js apontando o diretório do projeto para este repositório, com `server.js` como arquivo de inicialização. Cadastre `ADMIN_USER`, `ADMIN_PASSWORD` e `MAX_UPLOAD_MB` nas variáveis de ambiente da aplicação. O diretório `storage/` precisa ficar em armazenamento persistente e gravável. O arquivo de catálogo `storage/media.json` é criado automaticamente a partir de `data/media.seed.json` na primeira execução e fica fora do Git, para que novas mídias não sejam perdidas ou sobrescritas por uma implantação.
+### Importante
+Como esta V3 não possui servidor/backend, o painel usa `localStorage` do navegador. Portanto:
+- adicionar/excluir funciona no mesmo navegador/dispositivo;
+- fotos pequenas podem ser armazenadas localmente;
+- URLs podem ser cadastradas;
+- vídeos grandes não devem ser convertidos para Base64;
+- alterações feitas no painel **não alteram os arquivos do GitHub nem o servidor da Hostinger**;
+- para publicação compartilhada entre dispositivos seria necessário um serviço de armazenamento/backend.
 
-Não versione `.env`, senhas ou sessões.
+O painel possui Exportar/Importar catálogo para transportar o conteúdo entre navegadores.
+
+## Publicação pela Hostinger/Git
+O diretório publicado deve conter:
+`index.html`, `obras.html`, `style.css`, `script.js`, `admin.html`, `admin.css`, `admin.js` e `assets/`.
+
+## Imagens
+Mantenha:
+`assets/hero-serrana.webp`
+`assets/logo-serrana.webp`
+`assets/favicon-32.png`
+e as imagens de `assets/gallery/`.
+
+## Telefone
+WhatsApp: (21) 99133-1145
