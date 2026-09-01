@@ -1,54 +1,14 @@
-const phone = '5521991331145';
-const year = document.getElementById('year');
-if (year) year.textContent = new Date().getFullYear();
-
-const menuBtn = document.querySelector('.menu-btn');
-const header = document.querySelector('.header');
-menuBtn?.addEventListener('click', () => {
-  const open = header.classList.toggle('nav-open');
-  menuBtn.setAttribute('aria-expanded', String(open));
-  menuBtn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-});
-document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => {
-  header?.classList.remove('nav-open');
-  menuBtn?.setAttribute('aria-expanded', 'false');
-  menuBtn?.setAttribute('aria-label', 'Abrir menu');
-}));
-
-const form = document.getElementById('whatsapp-form');
-form?.addEventListener('submit', event => {
-  event.preventDefault();
-  const data = new FormData(form);
-  const message = [
-    'Olá, Luciano! Gostaria de solicitar um orçamento pela Serrana Pinturas & Reformas.',
-    '',
-    `*Nome:* ${data.get('nome')}`,
-    `*WhatsApp:* ${data.get('telefone')}`,
-    `*Serviço:* ${data.get('servico')}`,
-    `*Projeto:* ${data.get('mensagem')}`
-  ].join('\n');
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
-});
-
-const gallery = document.getElementById('gallery');
-if (gallery) {
-  const items = [['g1.webp','pintura'],['g2.webp','reforma'],['g3.webp','pintura'],['g4.webp','reforma'],['g5.webp','pintura'],['g6.webp','reforma'],['g7.webp','pintura'],['g8.webp','reforma']];
-  gallery.innerHTML = items.map((item, index) => `<figure data-category="${item[1]}" data-index="${index}" tabindex="0" role="button" aria-label="Ampliar obra ${index + 1}"><img loading="lazy" src="assets/gallery/${item[0]}" alt="Obra ${index + 1} da Serrana - ${item[1] === 'pintura' ? 'pintura e renovação' : 'reforma e transformação'}"><figcaption>${item[1] === 'pintura' ? 'Pintura e renovação' : 'Reforma e transformação'} • Projeto ${index + 1}</figcaption></figure>`).join('');
-  let current = 0;
-  let previousFocus = null;
-  const lb = document.getElementById('lightbox');
-  const lbImg = lb.querySelector('img');
-  const lbP = lb.querySelector('p');
-  const closeButton = lb.querySelector('.close');
-  const show = index => { current = index; lbImg.src = `assets/gallery/${items[index][0]}`; lbImg.alt = `Obra ${index + 1} da Serrana ampliada`; lbP.textContent = `Projeto ${index + 1} de ${items.length}`; };
-  const open = index => { previousFocus = document.activeElement; show(index); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; closeButton.focus(); };
-  const close = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; previousFocus?.focus(); };
-  gallery.addEventListener('click', event => { const figure = event.target.closest('figure'); if (figure) open(Number(figure.dataset.index)); });
-  gallery.addEventListener('keydown', event => { const figure = event.target.closest('figure'); if (figure && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); open(Number(figure.dataset.index)); } });
-  closeButton.addEventListener('click', close);
-  lb.addEventListener('click', event => { if (event.target === lb) close(); });
-  lb.querySelector('.prev').addEventListener('click', () => show((current - 1 + items.length) % items.length));
-  lb.querySelector('.next').addEventListener('click', () => show((current + 1) % items.length));
-  document.addEventListener('keydown', event => { if (!lb.classList.contains('open')) return; if (event.key === 'Escape') close(); if (event.key === 'ArrowLeft') show((current - 1 + items.length) % items.length); if (event.key === 'ArrowRight') show((current + 1) % items.length); });
-  document.querySelectorAll('.filters button').forEach(button => button.addEventListener('click', () => { document.querySelector('.filters .active')?.classList.remove('active'); button.classList.add('active'); document.querySelectorAll('.gallery figure').forEach(figure => { figure.hidden = button.dataset.filter !== 'all' && figure.dataset.category !== button.dataset.filter; }); }));
-}
+const phone='5521991331145';
+const year=document.getElementById('year'); if(year) year.textContent=new Date().getFullYear();
+const menuBtn=document.querySelector('.menu-btn'),header=document.querySelector('.header');
+menuBtn?.addEventListener('click',()=>{const open=header.classList.toggle('nav-open');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.setAttribute('aria-label',open?'Fechar menu':'Abrir menu')});
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{header?.classList.remove('nav-open');menuBtn?.setAttribute('aria-expanded','false');menuBtn?.setAttribute('aria-label','Abrir menu')}));
+const form=document.getElementById('whatsapp-form');form?.addEventListener('submit',event=>{event.preventDefault();const data=new FormData(form);const message=['Olá, Luciano! Gostaria de solicitar um orçamento pela Serrana Pinturas & Reformas.','',`*Nome:* ${data.get('nome')}`,`*WhatsApp:* ${data.get('telefone')}`,`*Serviço:* ${data.get('servico')}`,`*Projeto:* ${data.get('mensagem')}`].join('\n');window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,'_blank','noopener,noreferrer')});
+function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function videoEmbed(url){try{const u=new URL(url);let m=u.pathname.match(/(?:youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([\w-]{11})/)||u.searchParams.get('v')&&[null,u.searchParams.get('v')];if(m&&m[1])return `https://www.youtube-nocookie.com/embed/${m[1]}?rel=0`;let v=u.pathname.match(/vimeo\.com\/(?:video\/)?(\d+)/);if(v)return `https://player.vimeo.com/video/${v[1]}?dnt=1`;return null}catch{return null}}
+async function loadPublicMedia(){try{const r=await fetch('/api/media',{cache:'no-store'});if(!r.ok)return;const d=await r.json();const media=d.media||[];renderGallery(media);renderFeatured(media);renderVideos(media)}catch(e){console.warn('Mídias dinâmicas indisponíveis; mantendo conteúdo local.',e)}}
+function renderGallery(media){const gallery=document.getElementById('gallery');if(!gallery)return;const imgs=media.filter(m=>m.type==='image');if(!imgs.length)return;gallery.innerHTML=imgs.map((m,i)=>`<figure data-category="${esc(m.category)}" data-index="${i}" tabindex="0" role="button" aria-label="Ampliar ${esc(m.title)}"><img loading="lazy" src="${esc(m.url)}" alt="${esc(m.title)}"><figcaption>${esc(m.title)}${m.category&&m.category!=='geral'?' • '+esc(m.category):''}</figcaption></figure>`).join('');setupLightbox(imgs)}
+function setupLightbox(items){const gallery=document.getElementById('gallery'),lb=document.getElementById('lightbox');if(!gallery||!lb)return;const img=lb.querySelector('img'),p=lb.querySelector('p'),closeBtn=lb.querySelector('.close');let current=0,previousFocus=null;const show=i=>{current=i;img.src=items[i].url;img.alt=items[i].title||`Obra ${i+1}`;p.textContent=`${items[i].title||'Projeto'} • ${i+1} de ${items.length}`};const open=i=>{previousFocus=document.activeElement;show(i);lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';closeBtn.focus()};const close=()=>{lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';previousFocus?.focus()};gallery.onclick=e=>{const f=e.target.closest('figure');if(f)open(Number(f.dataset.index))};gallery.onkeydown=e=>{const f=e.target.closest('figure');if(f&&(e.key==='Enter'||e.key===' ')){e.preventDefault();open(Number(f.dataset.index))}};document.querySelectorAll('.filters button').forEach(button=>button.onclick=()=>{document.querySelector('.filters .active')?.classList.remove('active');button.classList.add('active');const wanted=button.dataset.filter;gallery.querySelectorAll('figure').forEach(f=>{const c=f.dataset.category||'geral';f.hidden=wanted!=='all' && !((wanted==='pintura'&&c.startsWith('pintura'))||(wanted==='reforma'&&c==='reforma')||c===wanted)})});closeBtn.onclick=close;lb.onclick=e=>{if(e.target===lb)close()};lb.querySelector('.prev').onclick=()=>show((current-1+items.length)%items.length);lb.querySelector('.next').onclick=()=>show((current+1)%items.length);document.onkeydown=e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show((current-1+items.length)%items.length);if(e.key==='ArrowRight')show((current+1)%items.length)}}
+function renderFeatured(media){const img=document.querySelector('.featured-image img');if(!img)return;const m=media.find(x=>x.featured&&x.type==='image')||media.find(x=>x.type==='image');if(m){img.src=m.url;img.alt=m.title||'Obra da Serrana'}}
+function renderVideos(media){const box=document.getElementById('video-gallery');if(!box)return;const videos=media.filter(m=>m.type==='video');if(!videos.length){box.innerHTML='<p class="video-empty">Ainda não há vídeos cadastrados no portfólio.</p>';return}box.innerHTML=videos.map(m=>{const embed=videoEmbed(m.url);const direct=/\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(m.url);const body=embed?`<iframe src="${esc(embed)}" title="${esc(m.title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`:direct?`<video src="${esc(m.url)}" controls preload="metadata" poster="${esc(m.thumbnailUrl||'')}"></video>`:`<a class="external-video" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">▶<span>Abrir vídeo na plataforma</span></a>`;return `<article class="video-card"><div class="video-frame">${body}</div><div><h3>${esc(m.title)}</h3><p>${esc(m.description||'Vídeo do portfólio Serrana.')}</p><a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">Abrir mídia ↗</a></div></article>`}).join('')}
+loadPublicMedia();

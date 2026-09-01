@@ -1,73 +1,26 @@
-# Serrana Pinturas & Reformas em Geral — V1.1
+# Serrana Pinturas & Reformas — V2.0
 
-Site institucional estático, otimizado para publicação no GitHub e na Hostinger.
+Site institucional responsivo com painel administrativo para gerenciamento de fotos e vídeos.
 
-## Principais recursos
+## Funcionalidades
+- Painel protegido em `/admin.html` ou `/admin`.
+- Upload de fotos e vídeos para armazenamento persistente em `storage/uploads/`.
+- Cadastro por URL para imagens e vídeos; YouTube e Vimeo recebem incorporação quando possível.
+- Edição de título, categoria, descrição e destaque.
+- Exclusão de mídias com remoção do arquivo local enviado ao servidor.
+- Galeria pública carregada pela API.
+- Seção pública de vídeos.
+- WhatsApp e conteúdo institucional mantidos.
+- Cookie de sessão HttpOnly + SameSite e limite básico de tentativas de login.
 
-- Layout responsivo para celular, tablet e computador
-- Identidade visual preta e dourada da Serrana
-- Página de serviços e apresentação profissional
-- Página **Nossas Obras** com filtros e galeria ampliada
-- Navegação por teclado na galeria
-- Formulário que abre uma mensagem pronta no WhatsApp do Luciano
-- Links para WhatsApp, Facebook e Instagram
-- Imagens convertidas para WebP para reduzir o peso do site
-- Favicon 32×32
-- SEO básico e dados estruturados da empresa
-- `robots.txt` e `.gitignore`
-- Melhorias de acessibilidade e suporte a redução de movimento
+## Rodar localmente
+1. `copy .env.example .env` (Windows) ou `cp .env.example .env`.
+2. Edite `ADMIN_USER` e `ADMIN_PASSWORD`.
+3. `npm install`
+4. `npm start`
+5. Abra `http://localhost:3000`.
 
-## Contato configurado
+## Hostinger
+Configure uma aplicação Node.js apontando o diretório do projeto para este repositório, com `server.js` como arquivo de inicialização. Cadastre `ADMIN_USER`, `ADMIN_PASSWORD` e `MAX_UPLOAD_MB` nas variáveis de ambiente da aplicação. O diretório `storage/` precisa ficar em armazenamento persistente e gravável. O arquivo de catálogo `storage/media.json` é criado automaticamente a partir de `data/media.seed.json` na primeira execução e fica fora do Git, para que novas mídias não sejam perdidas ou sobrescritas por uma implantação.
 
-- WhatsApp: +55 (21) 97060-2683
-- Facebook: Luciano Pinto
-- Instagram: @lucianopinto103
-
-## Testar localmente
-
-Abra `index.html` no navegador. Para uma simulação mais próxima de produção, use a extensão **Live Server** do VS Code.
-
-## Publicação na Hostinger
-
-1. Entre no **Gerenciador de Arquivos** da Hostinger.
-2. Abra a pasta `public_html` do domínio.
-3. Envie **o conteúdo desta pasta**, mantendo a pasta `assets`.
-4. Confirme que `index.html` está diretamente dentro de `public_html`.
-5. Teste o site, a galeria e o formulário do WhatsApp após a publicação.
-
-Estrutura esperada:
-
-```text
-public_html/
-├── index.html
-├── obras.html
-├── style.css
-├── script.js
-├── robots.txt
-└── assets/
-```
-
-## Publicação no GitHub
-
-```bash
-git init
-git add .
-git commit -m "Site Serrana Pinturas e Reformas V1.1"
-git branch -M main
-git remote add origin URL_DO_SEU_REPOSITORIO
-git push -u origin main
-```
-
-> Observação: o site funciona como um projeto estático. GitHub Pages pode hospedar esta versão; a Hostinger também pode receber os mesmos arquivos diretamente.
-
-## SEO após definir o domínio
-
-Depois de definir o domínio oficial, recomenda-se uma V1.2 com:
-
-- URL canônica (`canonical`)
-- URL da imagem Open Graph
-- `sitemap.xml` com o domínio definitivo
-- Cadastro no Google Search Console
-- SEO local com a cidade e as áreas reais de atendimento
-
-Não foram inventados domínio ou localização geográfica nesta versão para manter as informações do site corretas.
+Não versione `.env`, senhas ou sessões.
